@@ -33,8 +33,8 @@ func NewClient(cfg config.ServerConfig) (*Client, error) {
 	return &Client{client: client}, nil
 }
 
-func (s *Client) Exec(ctx context.Context, cmd string) (string, error) {
-	session, err := s.client.NewSession()
+func (c *Client) Exec(ctx context.Context, cmd string) (string, error) {
+	session, err := c.client.NewSession()
 	if err != nil {
 		return "", err
 	}
@@ -62,4 +62,8 @@ func (s *Client) Exec(ctx context.Context, cmd string) (string, error) {
 	)
 
 	return stdout.String(), nil
+}
+
+func (c *Client) Close() error {
+	return c.client.Close()
 }

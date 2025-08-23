@@ -15,6 +15,7 @@ func Hello() Operation {
 		if err != nil {
 			return err
 		}
+		defer tools.LogCloser(ctx, client)
 
 		output, err := client.Exec(ctx, "echo 'hello world'")
 		if err != nil {
