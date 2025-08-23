@@ -1,0 +1,41 @@
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - bidichk
+    - contextcheck
+    - errcheck
+    - errname
+    - exhaustive
+    - gocritic
+    - gosec
+    - govet
+    - importas
+    - makezero
+    - mirror
+    - misspell
+    - staticcheck
+    - usestdlibvars
+
+formatters:
+  enable:
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/thepabloaguilar/homelab
+
+issues:
+  max-issues-per-linter: 0
+
+output:
+  formats:
+    text: {}
+
+run:
+  timeout: 10m
+  allow-parallel-runners: true
+
+severity:
+  default: error

@@ -1,0 +1,7 @@
+servers:
+  - name: "SOME COOL NAME"
+    user: "SOME COOL USER NAME"
+    host: "SOME COOL HOST"
+    connection_timeout: "10s" # IT ALSO CAN BE A COOL TIMEOUT
+    auth:
+      password: "SOME COOL PASSWORD"
