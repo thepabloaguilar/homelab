@@ -4,12 +4,12 @@ test:
 
 .PHONY: lint
 lint:
-	@go tool -modfile=go.tools.mod golangci-lint run ./...
+	@go tool -modfile=.tools/go.mod golangci-lint run ./...
 
 .PHONY: goimports
 goimports:
-	@go tool -modfile=go.tools.mod goimports -local "$(shell go list -m)" -w .
+	@go tool -modfile=.tools/go.mod goimports -local "$(shell go list -m)" -w .
 
 .PHONY: goreleaser/check
 goreleaser/check:
-	@go tool -modfile=go.tools.mod goreleaser check
+	@go tool -modfile=.tools/go.mod goreleaser check
