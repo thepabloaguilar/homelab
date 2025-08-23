@@ -11,7 +11,7 @@ import (
 
 func Hello() Operation {
 	return func(ctx context.Context, sc config.ServerConfig) error {
-		client, err := tools.NewClient(sc)
+		client, err := tools.NewSSHClient(sc)
 		if err != nil {
 			return err
 		}

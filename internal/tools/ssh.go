@@ -10,11 +10,11 @@ import (
 	"github.com/thepabloaguilar/homelab/internal/config"
 )
 
-type Client struct {
+type SSHClient struct {
 	client *ssh.Client
 }
 
-func NewClient(cfg config.ServerConfig) (*Client, error) {
+func NewSSHClient(cfg config.ServerConfig) (*SSHClient, error) {
 	sshCfg := &ssh.ClientConfig{
 		User: cfg.User,
 		Auth: []ssh.AuthMethod{
@@ -30,10 +30,10 @@ func NewClient(cfg config.ServerConfig) (*Client, error) {
 		return nil, err
 	}
 
-	return &Client{client: client}, nil
+	return &SSHClient{client: client}, nil
 }
 
-func (c *Client) Exec(ctx context.Context, cmd string) (string, error) {
+func (c *SSHClient) Exec(ctx context.Context, cmd string) (string, error) {
 	session, err := c.client.NewSession()
 	if err != nil {
 		return "", err
@@ -64,6 +64,6 @@ func (c *Client) Exec(ctx context.Context, cmd string) (string, error) {
 	return stdout.String(), nil
 }
 
-func (c *Client) Close() error {
+func (c *SSHClient) Close() error {
 	return c.client.Close()
 }
