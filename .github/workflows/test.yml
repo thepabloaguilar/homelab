@@ -20,6 +20,11 @@ jobs:
         with:
           go-version-file: go.mod
 
+      - name: Check go.mod
+        run: |
+          go mod tidy
+          git diff --exit-code
+
       - name: Lint
         run: make lint
 
