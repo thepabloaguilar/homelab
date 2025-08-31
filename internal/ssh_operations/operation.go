@@ -1,4 +1,4 @@
-package operations
+package ssh_operations
 
 import (
 	"context"

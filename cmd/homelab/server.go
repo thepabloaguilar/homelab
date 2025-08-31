@@ -5,7 +5,7 @@ import (
 
 	"github.com/thepabloaguilar/homelab/internal/config"
 
-	"github.com/thepabloaguilar/homelab/internal/operations"
+	"github.com/thepabloaguilar/homelab/internal/ssh_operations"
 )
 
 var serverCmd = &cobra.Command{
@@ -20,7 +20,7 @@ var serverSetupCmd = &cobra.Command{
 		ctx := cmd.Context()
 		cfg := config.FromContext(ctx)
 
-		hello := operations.Hello()
+		hello := ssh_operations.Hello()
 		for _, server := range cfg.Servers {
 			if err := hello(ctx, server); err != nil {
 				return err
