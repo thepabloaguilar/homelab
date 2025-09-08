@@ -45,3 +45,9 @@ func LogCloser(ctx context.Context, closer io.Closer) {
 		}
 	}
 }
+
+// NamedLoggerToContext put an attribute called name where the value is the same from the argument.
+// This is kinda a work around as logger name it not printed when used in `console` mode.
+func NamedLoggerToContext(ctx context.Context, name string) context.Context {
+	return LoggerToContext(ctx, LoggerFromContext(ctx).With(zap.String("name", name)))
+}
