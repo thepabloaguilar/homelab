@@ -12,8 +12,8 @@ import (
 type configContextKey struct{}
 
 type Config struct {
-	Servers []ServerConfig `mapstructure:"servers"`
-	Log     LogConfig      `mapstructure:"log"`
+	Servers map[string]ServerConfig `mapstructure:"servers"`
+	Log     LogConfig               `mapstructure:"log"`
 }
 
 func Load() (Config, error) {

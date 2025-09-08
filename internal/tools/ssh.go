@@ -12,6 +12,7 @@ import (
 	"github.com/pkg/sftp"
 	"go.uber.org/zap"
 	"golang.org/x/crypto/ssh"
+	"golang.org/x/term"
 
 	"github.com/thepabloaguilar/homelab/internal/config"
 )
@@ -21,11 +22,17 @@ type SSHClient struct {
 }
 
 func NewSSHClient(cfg config.ServerConfig) (*SSHClient, error) {
+	authMethods := []ssh.AuthMethod{
+		ssh.Password(cfg.Auth.Password),
+	}
+
+	if cfg.Auth.InteractivePassword {
+		authMethods = append(authMethods, interactivePassword())
+	}
+
 	sshCfg := &ssh.ClientConfig{
 		User: cfg.User,
-		Auth: []ssh.AuthMethod{
-			ssh.Password(cfg.Auth.Password),
-		},
+		Auth: authMethods,
 		// TODO!: We should not ignore an insecure host key
 		HostKeyCallback: ssh.InsecureIgnoreHostKey(), //nolint:gosec
 		Timeout:         cfg.ConnectionTimeout,
@@ -123,4 +130,16 @@ func (c *SSHClient) UploadDir(ctx context.Context, dir fs.FS, root string) error
 
 func (c *SSHClient) Close() error {
 	return c.client.Close()
+}
+
+func interactivePassword() ssh.AuthMethod {
+	return ssh.PasswordCallback(func() (secret string, err error) {
+		fmt.Printf("Enter password: ")
+		password, err := term.ReadPassword(int(syscall.Stdin))
+		if err != nil {
+			return "", err
+		}
+
+		return string(password), nil
+	})
 }
