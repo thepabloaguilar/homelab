@@ -11,5 +11,6 @@ type ServerConfig struct {
 }
 
 type ServerAuthConfig struct {
-	Password string `mapstructure:"password"`
+	Password            string `mapstructure:"password"`
+	InteractivePassword bool   `mapstructure:"interactive_password"`
 }
